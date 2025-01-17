@@ -45,6 +45,7 @@ async def drive(distance, speed, mekadem=4): #more code
             error=int(((0-(motion_sensor.tilt_angles()[0]/10)*KP)*KI)*KD)
             motor_pair.move_tank(0,newSpeed-(error),newSpeed+error)
         motor_pair.stop(0,stop=motor.SMART_BRAKE)
+
 def closest(angle,wheelsOrGyro=True): #code
     goTo=0
     if wheelsOrGyro:
@@ -68,6 +69,20 @@ def closest(angle,wheelsOrGyro=True): #code
         elif abs(goTo_3)<abs(goTo_1) and abs(goTo_3)<abs(goTo_2):
             goTo=goTo_3
     return int(goTo)
+
+
+async def straight_gyro(distance, speed): #more code
+    motor.reset_relative_position(port.A,0)
+    KP=1.4
+    KI=0# pid
+    KI=0# pid
+    PD=0
+    motion_sensor.reset_yaw(0)
+    tspeed=int(speed*6.6) # control true speed
+    while abs(motor.relative_position(port.A))<abs(distance)*28:
+        error=int(((0-(motion_sensor.tilt_angles()[0]/10)*KP)*KI)*PD) #calc error
+        motor_pair.move_tank(0,tspeed-(error),tspeed+error,acceleration=1000) # moves the robots
+    motor_pair.stop(1,stop=motor.SMART_BRAKE)
 
 async def turn_to(targetAngle,speed):
         goTo = closest(targetAngle) # the shortest path
@@ -121,6 +136,9 @@ async def collection_red():
 #Red
 async def shark_coral():    #(pair, degrees, angle)
     print(motion_sensor.tilt_angles()[0])
+    await straight_gyro(30, -40)
+    await turn(35, 30)
+    return
     await drive(40, -200, 4)
     await motor_pair.move_for_degrees(0, 40, 100)
     await motor_pair.move_for_degrees(0, 1295, 0, velocity=-600)
