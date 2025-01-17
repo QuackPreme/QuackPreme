@@ -14,7 +14,7 @@ async def turn(angle,speed): # od code
             motor_pair.move_tank(0,tspeed,tspeed*-1)
         motor_pair.stop(0,stop=motor.BRAKE)
         print(motion_sensor.tilt_angles()[0])
-    
+
 
 async def drive_turn(distance, speed):
         motor.reset_relative_position(port.B,0)
@@ -22,7 +22,7 @@ async def drive_turn(distance, speed):
         wheelSpeed=int(speed*6.6)
         if wheelSpeed>0:
             while abs(motor.relative_position(port.B))<distance*28:
-                motor_pair.move_tank(1,wheelSpeed,wheelSpeed+int(motor.relative_position(port.B)*motor.relative_position(port.B)))
+                motor_pair.move_tank(0,wheelSpeed,wheelSpeed+int(motor.relative_position(port.B)*motor.relative_position(port.B)))
 def eatza(time):
         speed=(abs(motor.relative_position(port.B)*28)/(time*time))
         return speed
@@ -82,7 +82,8 @@ async def straight_gyro(distance, speed): #more code
     while abs(motor.relative_position(port.A))<abs(distance)*28:
         error=int(((0-(motion_sensor.tilt_angles()[0]/10)*KP)*KI)*PD) #calc error
         motor_pair.move_tank(0,tspeed-(error),tspeed+error,acceleration=1000) # moves the robots
-    motor_pair.stop(1,stop=motor.SMART_BRAKE)
+    motor_pair.stop(0,stop=motor.SMART_BRAKE)
+
 
 async def turn_to(targetAngle,speed):
         goTo = closest(targetAngle) # the shortest path
@@ -96,16 +97,16 @@ async def turn_to(targetAngle,speed):
             motor_pair.move_tank(1,newSpeed,newSpeed*-1) # moves robot
             goTo = closest(targetAngle) # new error
             goTo = closest(180-targetAngle) # new error
-        motor_pair.stop(1)
+        motor_pair.stop(0)
 
-#Comments Below                 #Comments Below                 #Comments Below                 #Comments Below                 #Comments Below
+#Comments Below                #Comments Below                #Comments Below                #Comments Below                #Comments Below
 
 
 
 "when im at 0 and i want to get to -100 so the traffic(how much i passed) will decrease by __ until it reaches -100"
 
 
-#Active code below                  #Active code below                  #Active code below                  #Active code below
+#Active code below                #Active code below                #Active code below                #Active code below
 
 
 #Yellow
@@ -136,8 +137,7 @@ async def collection_red():
 #Red
 async def shark_coral():    #(pair, degrees, angle)
     print(motion_sensor.tilt_angles()[0])
-    await straight_gyro(30, -40)
-    await turn(35, 30)
+    await drive(15, )
     return
     await drive(40, -200, 4)
     await motor_pair.move_for_degrees(0, 40, 100)
@@ -161,27 +161,34 @@ async def shark_coral():    #(pair, degrees, angle)
 
 #Magenta
 async def collection_blue():
+    default_speed = 100
     print(motion_sensor.tilt_angles()[0])
-    await motor_pair.move_for_degrees(0, 120, 0, velocity=600)
-    await turn(43, -45)
-    await drive(25, 115, 4)
+    # octopus
+    await drive(2, default_speed, 4) # 70
+    await turn(43, -30)
+    await drive(26, default_speed, 4) #115
+    # shrips/coral
     await motor_pair.move_for_degrees(0, 210, 0, velocity=-500)
-    await turn(25,45)
-    await drive(6, 100, 4)
-    await turn(20, 45)
-    await drive(11, 100, 4)
-    await turn(5, 45)
-    await drive(9, 100, 4)
-    await motor_pair.move_for_degrees(0, 310, 0, velocity=-550)
-    await turn(20, -45)
-    await drive(11, 100)
-    await turn(90, 45)
+    await turn(25,30)
+    await drive(6, default_speed, 4)
+    await turn(20, 30)
+    await drive(11, default_speed + 50, 4) # 150
+    await drive(5, -default_speed , 4) #-50
+    await drive(7, default_speed , 4) # 50
+    await turn(5, 30)
+    await drive(9, default_speed, 4)
+    await motor_pair.move_for_degrees(0, 330, 0, velocity=-550)
+    await turn(20, -30)
+    await drive(11, default_speed, 4)
+    # spike
+    await turn(90, 30)
     await motor_pair.move_for_degrees(0, 205, 0, velocity=300)
     await motor_pair.move_for_degrees(0, 210, 0, velocity=-300)
+    # home
     await motor_pair.move_for_degrees(0, 180, 100)
-    await drive(15, 150, 4)
-    await turn(20, -45)
-    await drive(22, 150, 4)
+    await drive(15, default_speed, 4) # 150
+    await turn(25, -30)
+    await drive(22, default_speed, 4) # 150
 
 
 
@@ -202,6 +209,6 @@ async def main():
         await shark_coral()
     if color_sensor.color(port.E)== color.MAGENTA:
         await collection_blue()
-        
+
 
 runloop.run(main())
