@@ -99,6 +99,19 @@ async def turn_to(targetAngle,speed):
             goTo = closest(180-targetAngle) # new error
         motor_pair.stop(0)
 
+async def keshet(distance, speed,a):
+        motor.reset_relative_position(port.A,0)
+        wheelSpeed=int(speed*6.6)
+        keshetSpeed=0
+        while abs(motor.relative_position(port.A))<distance*28:
+            if wheelSpeed>0:
+                motor_pair.move_tank(0,wheelSpeed,int(wheelSpeed*a))
+                motor_pair.move_tank(0,wheelSpeed,int(wheelSpeed*a))
+            else:
+                motor_pair.move_tank(0,int(-a*wheelSpeed),-1*wheelSpeed)
+                motor_pair.move_tank(0,-int(a*wheelSpeed),-1*wheelSpeed)
+        motor_pair.stop(0, stop=motor.BRAKE)
+
 #Comments Below                #Comments Below                #Comments Below                #Comments Below                #Comments Below
 
 
@@ -190,6 +203,19 @@ async def collection_blue():
     await turn(25, -30)
     await drive(22, default_speed, 4) # 150
 
+async def mehshutefat ():
+    await straight_gyro(20,80)
+    await keshet(25,30,1.5)
+    await drive(7,50,4)
+    await drive(10,-50,4)
+    await keshet(23,-30,2)
+    await drive(10,-50,4)
+    await motor.run_for_degrees(port.D, 120, 150)
+    await turn(3,30)
+    await drive(13,50,4)
+    await motor.run_for_degrees(port.D, 120, -150)
+    await drive(13,-50,4)
+    await turn(20,-30)
 
 
 async def gyro_test():
@@ -209,6 +235,8 @@ async def main():
         await shark_coral()
     if color_sensor.color(port.E)== color.MAGENTA:
         await collection_blue()
+    if color_sensor.color(port.E)== color.BLUE:
+        await mehshutefat() 
 
 
-runloop.run(main())
+runloop.run(main()) 
