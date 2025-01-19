@@ -174,7 +174,7 @@ async def shark_coral():    #(pair, degrees, angle)
 
 #Magenta
 async def collection_blue():
-    default_speed = 100
+    default_speed = 125
     print(motion_sensor.tilt_angles()[0])
     # octopus
     await drive(2, default_speed, 4) # 70
@@ -187,15 +187,22 @@ async def collection_blue():
     await turn(20, 30)
     await drive(11, default_speed + 50, 4) # 150
     await drive(5, -default_speed , 4) #-50
-    await drive(7, default_speed , 4) # 50
-    await turn(5, 30)
+    await turn(15, -30)
+    await drive(5.3, default_speed , 4) # 50
+    await turn(20, 30)
+    await drive(3, default_speed)
+    await motor_pair.move_for_degrees(0, 50, 0, velocity=-400)
+    await turn(45, 30)
+    await drive(3, default_speed)
+    exit(1)
     await drive(9, default_speed, 4)
-    await motor_pair.move_for_degrees(0, 330, 0, velocity=-550)
-    await turn(20, -30)
+    await motor_pair.move_for_degrees(0, 330, 0, velocity=-555)
+    await turn(20, 30)
     await drive(11, default_speed, 4)
     # spike
     await turn(90, 30)
     await motor_pair.move_for_degrees(0, 205, 0, velocity=300)
+    await drive(0.1, 1)
     await motor_pair.move_for_degrees(0, 210, 0, velocity=-300)
     # home
     await motor_pair.move_for_degrees(0, 180, 100)
@@ -218,6 +225,12 @@ async def mehshutefat ():
     await turn(20,-30)
 
 
+async def bigboat():
+    await drive(15, 175, 4)
+    await motor.run_for_degrees(port.D, 350, 200)
+    await drive(10, -200, 4)
+    await motor.run_for_degrees(port.D, 350, -200)
+
 async def gyro_test():
     await drive_turn(45, 45)
     await drive(25, 200, 4)
@@ -227,6 +240,8 @@ async def gyro_test():
 
 
 async def main():
+    if color_sensor.color(port.E)== color.GREEN:
+        await bigboat()
     if color_sensor.color(port.E)== color.BLACK:
         await collection_red()
     if color_sensor.color(port.E)== color.YELLOW:
@@ -236,7 +251,7 @@ async def main():
     if color_sensor.color(port.E)== color.MAGENTA:
         await collection_blue()
     if color_sensor.color(port.E)== color.BLUE:
-        await mehshutefat() 
+        await mehshutefat()
 
 
-runloop.run(main()) 
+runloop.run(main())
