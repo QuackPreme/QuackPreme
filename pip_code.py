@@ -210,19 +210,37 @@ async def collection_blue():
     await turn(25, -30)
     await drive(22, default_speed, 4) # 150
 
-async def mehshutefat ():
+#async def combined ():
+    default_speed = 50
     await straight_gyro(20,80)
     await keshet(25,30,1.5)
-    await drive(7,50,4)
-    await drive(10,-50,4)
-    await keshet(23,-30,2)
-    await drive(10,-50,4)
+    await drive(5,default_speed,4)
+    #octopus
+    await drive(19, -default_speed-25 ,4)
+    await motor.run_for_degrees(port.D, 200, 400)
+    await keshet(18, -32, 1.68556374)
+    exit(1)
+    await keshet()
+    #await keshet(23,-30,2)
+    await drive(10,-default_speed,4)
     await motor.run_for_degrees(port.D, 120, 150)
     await turn(3,30)
-    await drive(13,50,4)
+    await drive(13,default_speed,4)
     await motor.run_for_degrees(port.D, 120, -150)
-    await drive(13,-50,4)
-    await turn(20,-30)
+    await drive(13,-default_speed,4)
+    await turn(25,-30)
+    await drive(10, default_speed)
+
+async def combined_2 ():
+    default_speed = 100
+    await drive(40, default_speed)
+    await turn(50, 30)
+    await drive(3, default_speed)
+    await drive(5, -default_speed)
+    await turn(35, -30)
+    await drive(10, default_speed)
+    await turn(20, -30)
+
 
 
 async def bigboat():
@@ -251,7 +269,7 @@ async def main():
     if color_sensor.color(port.E)== color.MAGENTA:
         await collection_blue()
     if color_sensor.color(port.E)== color.BLUE:
-        await mehshutefat()
+        await combined_2()
 
 
 runloop.run(main())
