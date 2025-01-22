@@ -233,13 +233,19 @@ async def collection_blue():
 
 async def combined_2 ():
     default_speed = 100
+    #octopus
     await drive(40, default_speed)
-    await turn(50, 30)
-    await drive(3, default_speed)
+    await turn(50, 25)
+    await drive(2.7, default_speed)
     await drive(5, -default_speed)
-    await turn(35, -30)
-    await drive(10, default_speed)
-    await turn(20, -30)
+    #fish
+    await turn(28, -30)
+    await drive(8, default_speed)
+    await turn(22, -30)
+    await drive(4, default_speed)
+    await turn(20, 30)
+    exit(1)
+    await drive()
 
 
 
