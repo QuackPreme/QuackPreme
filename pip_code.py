@@ -148,20 +148,28 @@ async def collection_red():
     await motor_pair.move_for_degrees(0, 650, 0, velocity=650)
 
 
-    #V
 
 #Red
 async def shark_coral():    #(pair, degrees, angle)
     default_speed = 125
     print(motion_sensor.tilt_angles()[0])
-    await drive(44.5, -default_speed)
-    await turn(45, -30)
-    await drive(4.5, -75)
-    await drive(8, default_speed)
-    await turn(42, -30)
-    await drive(8, -50)
-    await motor.run_for_degrees(port.C, 400, 400)
+    await motor.run_for_degrees(port.C, 450, 400)
     await drive(11, default_speed)
+    await turn(85, 30)
+    await drive(2 ,default_speed)
+    await motor_pair.move_for_degrees(0, 25, -100)
+    await drive(3 ,-default_speed)
+    await motor.run_for_degrees(port.C, 450, -400)
+
+ #    await drive(44.5, -default_speed)
+   # await turn(45, -30)
+   # await drive(4.5, -75)
+   # await drive(8, default_speed)
+   # await turn(42, -30)
+   # await drive(8, -50)
+   # await motor.run_for_degrees(port.C, 400, 400)
+   # await drive(11, default_speed)
+#Magenta
 #Magenta
 async def collection_blue():
     default_speed = 125
