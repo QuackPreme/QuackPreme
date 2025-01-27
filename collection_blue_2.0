@@ -1,0 +1,178 @@
+from hub import hardware_id, light_matrix, port, motion_sensor, button, light
+from motor import BRAKE, ERROR, stop, velocity
+import color_sensor, color, runloop, motor_pair, motor, hub, device
+import motor_pair
+import motor
+
+motor_pair.unpair(1)
+WHEELS = motor_pair.PAIR_1
+motor_pair.pair(WHEELS, port.A, port.B)
+
+async def turn(angle,speed): # od code
+        motion_sensor.reset_yaw(0)
+        tspeed = int(speed*3.5)
+        while abs(motion_sensor.tilt_angles()[0])<=angle*10:
+            motor_pair.move_tank(0,tspeed,tspeed*-1)
+        motor_pair.stop(0,stop=motor.BRAKE)
+        print(motion_sensor.tilt_angles()[0])
+
+
+async def drive_turn(distance, speed):
+        motor.reset_relative_position(port.B,0)
+        motor.reset_relative_position(port.A,0)
+        wheelSpeed=int(speed*6.6)
+        if wheelSpeed>0:
+            while abs(motor.relative_position(port.B))<distance*28:
+                motor_pair.move_tank(0,wheelSpeed,wheelSpeed+int(motor.relative_position(port.B)*motor.relative_position(port.B)))
+def eatza(time):
+        speed=(abs(motor.relative_position(port.B)*28)/(time*time))
+        return speed
+
+async def drive(distance, speed, mekadem=4): #more code
+        motor.reset_relative_position(port.A,0)
+        KP=2
+        KI=1.1
+        KD=1.00312
+        x=1
+        newSpeed=36
+        motion_sensor.reset_yaw(0)
+        tspeed=int(speed*mekadem)
+        while abs(motor.relative_position(port.A))<abs(distance)*28:
+            if newSpeed<tspeed:
+                newSpeed+=int(eatza(x))
+                x+=1
+            elif newSpeed>=tspeed:
+                newSpeed=tspeed
+            error=int(((0-(motion_sensor.tilt_angles()[0]/10)*KP)*KI)*KD)
+            motor_pair.move_tank(0,newSpeed-(error),newSpeed+error)
+        motor_pair.stop(0,stop=motor.SMART_BRAKE)
+
+def closest(angle,wheelsOrGyro=True): #code
+    goTo=0
+    if wheelsOrGyro:
+        goTo_1=angle-((motion_sensor.tilt_angles()[0]/10)%360)
+        goTo_2=(angle-((motion_sensor.tilt_angles()[0]/10)%360))+360
+        goTo_3=(angle-((motion_sensor.tilt_angles()[0]/10)%360))- 360
+        if abs(goTo_1)<abs(goTo_2) and abs(goTo_1)<abs(goTo_3):
+            goTo=goTo_1
+        elif abs(goTo_2)<abs(goTo_1) and abs(goTo_2)<abs(goTo_3):
+            goTo=goTo_2
+        elif abs(goTo_3)<abs(goTo_1) and abs(goTo_3)<abs(goTo_2):
+            goTo=goTo_3
+    else:
+        goTo_1=angle-(motor.absolute_position(port.C)%360)
+        goTo_2=(angle-(motor.absolute_position(port.C)%360))+360
+        goTo_3=(angle-(motor.absolute_position(port.C)%360))- 360
+        if abs(goTo_1)<abs(goTo_2) and abs(goTo_1)<abs(goTo_3):
+            goTo=goTo_1
+        elif abs(goTo_2)<abs(goTo_1) and abs(goTo_2)<abs(goTo_3):
+            goTo=goTo_2
+        elif abs(goTo_3)<abs(goTo_1) and abs(goTo_3)<abs(goTo_2):
+            goTo=goTo_3
+    return int(goTo)
+
+
+async def straight_gyro(distance, speed): #more code
+    motor.reset_relative_position(port.A,0)
+    KP=1.4
+    KI=0# pid
+    KI=0# pid
+    PD=0
+    motion_sensor.reset_yaw(0)
+    tspeed=int(speed*6.6) # control true speed
+    while abs(motor.relative_position(port.A))<abs(distance)*28:
+        error=int(((0-(motion_sensor.tilt_angles()[0]/10)*KP)*KI)*PD) #calc error
+        motor_pair.move_tank(0,tspeed-(error),tspeed+error,acceleration=1000) # moves the robots
+    motor_pair.stop(0,stop=motor.SMART_BRAKE)
+
+
+async def turn_to(targetAngle,speed):
+        goTo = closest(targetAngle) # the shortest path
+        motion_sensor.reset_yaw(0)
+        goTo = closest(180-targetAngle) # the shortest path
+        wheelSpeed = int(speed*6.6) # the true speed
+        while abs(goTo) > 0:
+            newSpeed = int(wheelSpeed*(abs(goTo)/goTo)) #direction
+        while abs(goTo) > 0:
+            newSpeed = int(wheelSpeed*(abs(goTo)/goTo)) #direction
+            motor_pair.move_tank(1,newSpeed,newSpeed*-1) # moves robot
+            goTo = closest(targetAngle) # new error
+            goTo = closest(180-targetAngle) # new error
+        motor_pair.stop(0)
+
+async def keshet(distance, speed,a):
+        motor.reset_relative_position(port.A,0)
+        wheelSpeed=int(speed*6.6)
+        keshetSpeed=0
+        while abs(motor.relative_position(port.A))<distance*28:
+            if wheelSpeed>0:
+                motor_pair.move_tank(0,wheelSpeed,int(wheelSpeed*a))
+                motor_pair.move_tank(0,wheelSpeed,int(wheelSpeed*a))
+            else:
+                motor_pair.move_tank(0,int(-a*wheelSpeed),-1*wheelSpeed)
+                motor_pair.move_tank(0,-int(a*wheelSpeed),-1*wheelSpeed)
+        motor_pair.stop(0, stop=motor.BRAKE)
+
+
+async def collection_blue_2():
+    """await drive(5,50)
+    await turn(45,-50)
+    await drive(28,90)
+    await drive(8,-90)
+    await turn(22,40)
+    await keshet(30,70,0.86)"""
+    await keshet(30,70,-0.86)
+    """await turn(22,-40)
+    await drive(8,90)
+    await drive(28,-90)
+    await turn(45,50)"""
+
+
+
+
+
+
+
+
+
+#async def collection_blue():
+
+#    default_speed = 125
+#   print(motion_sensor.tilt_angles()[0])
+#    # octopus
+#    await drive(2, default_speed, 4) # 70
+#    await turn(43, -30)
+#    await drive(26, default_speed, 4) #115
+#    # shrips/coral
+#    await motor_pair.move_for_degrees(0, 210, 0, velocity=-500)
+#    await turn(25,30)
+#    await drive(6, default_speed, 4)
+#    await turn(20, 30)
+#    await drive(11, default_speed + 50, 4) # 150
+#    await drive(5, -default_speed , 4) #-50
+#    await turn(15, -30)
+#    await drive(5.3, default_speed , 4) # 50
+#    await turn(20, 30)
+#    await drive(5, default_speed)
+#    await motor_pair.move_for_degrees(0, 50, 0, velocity=-400)
+#    await turn(45,30)
+#    motion_sensor.reset_yaw(0)
+#    await drive(4,default_speed)
+#    runloop.sleep_ms(100)
+#    await drive(8,-125)
+#    motion_sensor.reset_yaw(0)
+#    await drive(4,default_speed)
+#    #runloop.sleep_ms(100)
+#    await drive(8,-125)
+
+
+
+async def main():
+    await collection_blue_2()
+
+
+
+
+
+
+runloop.run(main())
