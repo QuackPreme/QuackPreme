@@ -147,31 +147,21 @@ async def collection_red():
     await motor_pair.move_for_degrees(0,275,-100, velocity=150)
     await motor_pair.move_for_degrees(0, 650, 0, velocity=650)
 
+
+    #V
+
 #Red
 async def shark_coral():    #(pair, degrees, angle)
+    default_speed = 125
     print(motion_sensor.tilt_angles()[0])
-    await drive(15, )
-    return
-    await drive(40, -200, 4)
-    await motor_pair.move_for_degrees(0, 40, 100)
-    await motor_pair.move_for_degrees(0, 1295, 0, velocity=-600)
-    await motor_pair.move_for_degrees(0, 70, -100)
-    await motor_pair.move_for_degrees(0, 160, 0, velocity=-400)
-    await motor_pair.move_for_degrees(0, 300, 0, velocity=400)
-    await motor_pair.move_for_degrees(0, 68, -100)
-    await motor_pair.move_for_degrees(0, 250, 0, velocity=-250)
-    await motor.run_for_degrees(port.C, 450, 400)
-    await motor_pair.move_for_degrees(0, 35, 100)
-    await motor_pair.move_for_degrees(0, 300, 0, velocity=500)
-    await motor_pair.move_for_degrees(0, 150, 100)
-    await motor_pair.move_for_degrees(0, 70, 0, velocity=500)
-    await motor_pair.move_for_degrees(0, 13, 100)
-    await motor_pair.move_for_degrees(0, 110, 0, velocity=-300)
-    await motor.run_for_degrees(port.C, 410, -600)
-    await motor_pair.move_for_degrees(0, 8, 100)
-    await motor_pair.move_for_degrees(0, 20, 100)
-    await motor_pair.move_for_degrees(0, 1500, 0 , velocity=600)
-
+    await drive(44.5, -default_speed)
+    await turn(45, -30)
+    await drive(4.5, -75)
+    await drive(8, default_speed)
+    await turn(42, -30)
+    await drive(8, -50)
+    await motor.run_for_degrees(port.C, 400, 400)
+    await drive(11, default_speed)
 #Magenta
 async def collection_blue():
     default_speed = 125
@@ -184,9 +174,12 @@ async def collection_blue():
     await motor_pair.move_for_degrees(0, 210, 0, velocity=-500)
     await turn(25,30)
     await drive(6, default_speed, 4)
-    await turn(20, 30)
-    await drive(11, default_speed + 50, 4) # 150
-    await drive(5, -default_speed , 4) #-50
+    await turn(21, 30)
+    await drive(8, default_speed + 50, 4) # 150
+    await turn(8, 30)
+    await drive(4, default_speed)
+    await drive(4, -default_speed , 4) #-50
+    exit(1)
     await turn(15, -30)
     await drive(5.3, default_speed , 4) # 50
     await turn(20, 30)
@@ -194,7 +187,6 @@ async def collection_blue():
     await motor_pair.move_for_degrees(0, 50, 0, velocity=-400)
     await turn(45, 30)
     await drive(3, default_speed)
-    exit(1)
     await drive(9, default_speed, 4)
     await motor_pair.move_for_degrees(0, 330, 0, velocity=-555)
     await turn(20, 30)
