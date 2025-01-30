@@ -121,9 +121,28 @@ async def collection_blue_2():
     await drive(8,-90)
     await turn(22,40)
     await keshet(33,90,0.90)
+    runloop.sleep_ms(200)
+    await keshet(3,90,-5)
+    #await drive(8,70)
+    exit()
     await drive(8.8,-90)
+    """await turn(20,80)
+    await drive(4,95)
+    await keshet(8,95,0.3)
+    await drive(4,-90)
+    await turn(13,90)
+    await drive(9,50)
+    runloop.sleep_ms(1000)
+    await drive(5,-90)
+    runloop.sleep_ms(100)
+    await drive(5,-90)
+    await turn(45,70)
+    await drive(15,70)
+    await turn(30,70)
+    await drive(12,70)"""
+    exit()
     await turn(100,-70)
-    await drive(0.01,50)
+    await drive(0.1,50)
     await turn(80,-70)
     await drive(9,90)
     #runloop.sleep_ms(1000)
@@ -145,7 +164,7 @@ async def collection_blue_2():
 #async def collection_blue():
 
 #    default_speed = 125
-#   print(motion_sensor.tilt_angles()[0])
+#print(motion_sensor.tilt_angles()[0])
 #    # octopus
 #    await drive(2, default_speed, 4) # 70
 #    await turn(43, -30)
