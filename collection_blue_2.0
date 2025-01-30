@@ -115,17 +115,24 @@ async def keshet(distance, speed,a):
 
 
 async def collection_blue_2():
-    """await drive(5,50)
+    await drive(5,50)
     await turn(45,-50)
     await drive(28,90)
     await drive(8,-90)
     await turn(22,40)
-    await keshet(30,70,0.86)"""
-    await keshet(30,70,-0.86)
-    """await turn(22,-40)
-    await drive(8,90)
-    await drive(28,-90)
-    await turn(45,50)"""
+    await keshet(33,90,0.90)
+    await drive(8.8,-90)
+    await turn(100,-70)
+    await drive(0.01,50)
+    await turn(80,-70)
+    await drive(9,90)
+    #runloop.sleep_ms(1000)
+    #await turn(100,-90)
+    #runloop.sleep_ms(200)
+    #await turn(80,-90)
+    #await keshet(30,70,1.889)
+    #await drive(8,90)
+    #await drive(28,-90)
 
 
 
