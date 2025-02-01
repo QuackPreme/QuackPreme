@@ -248,9 +248,10 @@ async def collection_blue():
     await turn(25,-30)
     await drive(10, default_speed)
 
-async def combined_2 ():
+async def combined_2 (): #port d= להזיז את ההלבשה
     default_speed = 100
     #octopus
+    print("octopus")
     await drive(1, default_speed)
     await turn(55, -20)
     await drive(38, default_speed)
@@ -258,27 +259,43 @@ async def combined_2 ():
     await drive(4, default_speed)
     await drive(3.8, -default_speed)
     #fish
-    await turn(30, -30)
-    await drive(4, default_speed)
+    print ("Fish")
+    runloop.sleep_ms(1000)
+    await turn(34, -30)
+    await drive(6, default_speed)
     await turn(8, -30)
     await drive(8, default_speed)
     await turn(25, 30)
 #Loop Thingy
-    await drive(9, default_speed)
+    print ("Thingy")
+    runloop.sleep_ms(1000)
+    await drive(7, default_speed)
     await turn(175, 50)
     await drive(3, -default_speed)
-    await turn(30, 30)
+    #await turn(30, 30)
     await motor.run_for_degrees(port.D, 450, 400)
     await drive(7, -default_speed)
     await motor.run_for_degrees(port.D, 450, -400)
+
+    # going to flag drop
     await drive(7, default_speed)
     await turn(35, 30)
     await drive(4, -default_speed)
     await turn(8, 30)
     await turn(2, -30)
-    await drive(5.5, -default_speed)
-
-
+    await drive(5.5, -default_speed + 150)
+    runloop.sleep_ms(2000)
+    #retern
+    '''print ("return")
+    runloop.sleep_ms(1000)
+    await drive(5,-90)
+    await turn(90,80)
+    await drive(15,70)
+    await turn(20,-60)
+    await drive(10,90)
+    await turn(10,-70)
+    await drive(5,90)
+'''
 
 async def bigboat():
     await drive(15, 175, 4)
@@ -286,7 +303,7 @@ async def bigboat():
     await drive(10, -200, 4)
     await motor.run_for_degrees(port.D, 350, -200)
 
-async def gyro_test(): 
+async def gyro_test():
     await drive_turn(45, 45)
     await drive(25, 200, 4)
     await turn (90, -50)
