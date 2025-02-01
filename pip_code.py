@@ -274,7 +274,8 @@ async def combined_2 ():
     await drive(7, default_speed)
     await turn(35, 30)
     await drive(4, -default_speed)
-    await turn(5, 30)
+    await turn(8, 30)
+    await turn(2, -30)
     await drive(5.5, -default_speed)
 
 
