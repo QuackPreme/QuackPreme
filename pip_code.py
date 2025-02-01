@@ -161,14 +161,14 @@ async def shark_coral():    #(pair, degrees, angle)
     await drive(8.6, -40)
     await turn(6.5, 30)
     await drive(0.0001, 0.01)
-    await turn(6, 30)
+    await turn(2, 30)
     await motor.run_for_degrees(port.C, 450, 400)
     await drive(3, default_speed)
     await turn(120, 50)
     await drive(2, -150)
     await motor.run_for_degrees(port.C, 450, -400)
     await turn(5, -30)
-    await drive(15, default_speed)
+    await drive(17, default_speed)
     await turn(25, -30)
     await drive(30, default_speed)
 
@@ -177,14 +177,15 @@ async def shark_coral():    #(pair, degrees, angle)
 async def aquanaut():
     default_speed = 150
     await motor.run_for_degrees(port.C, 450, 400)
-    await drive(40, -default_speed)
-    await turn(43, 30)
-    await drive(3, -default_speed)
-    await turn(10, -30)
-    await motor.run_for_degrees(port.C, 450, -400)
-    await drive(10, default_speed)
+    await drive(25, -default_speed)
+    await turn(27, 30)
+    await drive(16, -default_speed)
+    await turn(5, 30)
+    await motor.run_for_degrees(port.C , 450, -400)
+    await turn(5, -30)
+    await drive(25, default_speed)
     await turn(45, -30)
-    await drive(40, default_speed)
+    await drive(16, default_speed)
 
 
 #Magenta
@@ -248,10 +249,9 @@ async def collection_blue():
     await turn(25,-30)
     await drive(10, default_speed)
 
-async def combined_2 (): #port d= להזיז את ההלבשה
+async def combined_2 ():
     default_speed = 100
     #octopus
-    print("octopus")
     await drive(1, default_speed)
     await turn(55, -20)
     await drive(38, default_speed)
@@ -259,43 +259,26 @@ async def combined_2 (): #port d= להזיז את ההלבשה
     await drive(4, default_speed)
     await drive(3.8, -default_speed)
     #fish
-    print ("Fish")
-    runloop.sleep_ms(1000)
-    await turn(34, -30)
-    await drive(6, default_speed)
+    await turn(30, -30)
+    await drive(4, default_speed)
     await turn(8, -30)
     await drive(8, default_speed)
     await turn(25, 30)
 #Loop Thingy
-    print ("Thingy")
-    runloop.sleep_ms(1000)
-    await drive(7, default_speed)
+    await drive(9, default_speed)
     await turn(175, 50)
     await drive(3, -default_speed)
-    #await turn(30, 30)
+    await turn(30, 30)
     await motor.run_for_degrees(port.D, 450, 400)
     await drive(7, -default_speed)
     await motor.run_for_degrees(port.D, 450, -400)
-
-    # going to flag drop
     await drive(7, default_speed)
     await turn(35, 30)
     await drive(4, -default_speed)
-    await turn(8, 30)
-    await turn(2, -30)
-    await drive(5.5, -default_speed + 150)
-    runloop.sleep_ms(2000)
-    #retern
-    '''print ("return")
-    runloop.sleep_ms(1000)
-    await drive(5,-90)
-    await turn(90,80)
-    await drive(15,70)
-    await turn(20,-60)
-    await drive(10,90)
-    await turn(10,-70)
-    await drive(5,90)
-'''
+    await turn(5, 30)
+    await drive(5.5, 125)
+
+
 
 async def bigboat():
     await drive(15, 175, 4)
@@ -303,7 +286,7 @@ async def bigboat():
     await drive(10, -200, 4)
     await motor.run_for_degrees(port.D, 350, -200)
 
-async def gyro_test():
+async def gyro_test(): 
     await drive_turn(45, 45)
     await drive(25, 200, 4)
     await turn (90, -50)
@@ -319,7 +302,7 @@ async def main():
     if color_sensor.color(port.E)== color.YELLOW:
         await kraken_chest()
     if color_sensor.color(port.E)== color.RED:
-        await shark_coral()
+        await aquanaut()
     if color_sensor.color(port.E)== color.MAGENTA:
         await collection_blue()
     if color_sensor.color(port.E)== color.BLUE:
