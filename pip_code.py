@@ -253,7 +253,7 @@ async def combined_2 ():
     default_speed = 100
     #octopus
     await drive(1, default_speed)
-    await turn(55, -20)
+    await turn(55, -15)
     await drive(38, default_speed)
     await turn(55, 20)
     await drive(4, default_speed)
@@ -274,9 +274,13 @@ async def combined_2 ():
     await motor.run_for_degrees(port.D, 450, -400)
     await drive(7, default_speed)
     await turn(35, 30)
-    await drive(4, -default_speed)
+    await drive(6, -25)
     await turn(5, 30)
-    await drive(5.5, 125)
+    await drive(6, 125)
+    await turn(50, 30)
+    await drive(25, 150)
+    await turn(70, -30)
+    await drive(50, 150)
 
 
 
@@ -286,7 +290,19 @@ async def bigboat():
     await drive(10, -200, 4)
     await motor.run_for_degrees(port.D, 350, -200)
 
-async def gyro_test(): 
+async def sharkplace():
+    default_speed = 125
+    await drive(30.5, default_speed)
+    await turn(45, -30)
+    await drive(8, 25)
+    await drive(4, 50)
+    await drive(2, -default_speed)
+    await turn(40, 30)
+    await drive(50, default_speed)
+    await turn(40, 30)
+    await drive(20, default_speed) 
+
+async def gyro_test():
     await drive_turn(45, 45)
     await drive(25, 200, 4)
     await turn (90, -50)
@@ -300,7 +316,7 @@ async def main():
     if color_sensor.color(port.E)== color.BLACK:
         await collection_red()
     if color_sensor.color(port.E)== color.YELLOW:
-        await kraken_chest()
+        await sharkplace()
     if color_sensor.color(port.E)== color.RED:
         await aquanaut()
     if color_sensor.color(port.E)== color.MAGENTA:
