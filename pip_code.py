@@ -193,61 +193,49 @@ async def collection_blue():
     default_speed = 125
     print(motion_sensor.tilt_angles()[0])
     # octopus
-    await drive(2, default_speed, 4) # 70
+    await drive(6, default_speed, 4) # 70
     await turn(43, -30)
-    await drive(26, default_speed, 4) #115
+    await drive(20, 100, 4) #115
     # shrips/coral
-    await motor_pair.move_for_degrees(0, 210, 0, velocity=-500)
-    await turn(25,30)
-    await drive(6, default_speed, 4)
-    await turn(21, 30)
-    await drive(8, default_speed + 50, 4) # 150
-    await turn(8, 30)
-    await drive(4, default_speed)
-    await drive(4, -default_speed , 4) #-50
+    await motor_pair.move_for_degrees(0, 260, 0, velocity=-500)
+    await turn(28,30)
+    await drive(4, default_speed, 4)
+    await turn(16, 30)
+    await drive(18, default_speed , 4) # 150
+    await motor_pair.move_for_degrees(0, 100, 0, velocity=-500)
     exit(1)
-    await turn(15, -30)
-    await drive(5.3, default_speed , 4) # 50
-    await turn(20, 30)
+    await turn(10, 30)
     await drive(3, default_speed)
-    await motor_pair.move_for_degrees(0, 50, 0, velocity=-400)
-    await turn(45, 30)
-    await drive(3, default_speed)
-    await drive(9, default_speed, 4)
-    await motor_pair.move_for_degrees(0, 330, 0, velocity=-555)
-    await turn(20, 30)
-    await drive(11, default_speed, 4)
-    # spike
+    await motor_pair.move_for_degrees(0, 100, 0, velocity=500)
+    await motor_pair.move_for_degrees(0, 260, 0, velocity=-500)
+    await turn(18, -30)
+    await drive(18, default_speed)
+    await motor_pair.move_for_degrees(0, 180, 0, velocity=-500)
     await turn(90, 30)
-    await motor_pair.move_for_degrees(0, 205, 0, velocity=300)
-    await drive(0.1, 1)
-    await motor_pair.move_for_degrees(0, 210, 0, velocity=-300)
-    # home
-    await motor_pair.move_for_degrees(0, 180, 100)
-    await drive(15, default_speed, 4) # 150
-    await turn(25, -30)
-    await drive(22, default_speed, 4) # 150
+    await drive(5, default_speed)
+    await drive(5, -default_speed)
 
-#async def combined ():
-    default_speed = 50
-    await straight_gyro(20,80)
-    await keshet(25,30,1.5)
-    await drive(5,default_speed,4)
-    #octopus
-    await drive(19, -default_speed-25 ,4)
-    await motor.run_for_degrees(port.D, 200, 400)
-    await keshet(18, -32, 1.68556374)
+async def collection_blue2 ():
+    default_speed = 125
+    await drive(6, default_speed, 4) # 70
+    await turn(43, -30)
+    await drive(20, 100, 4) #115
+    # shrips/coral
+    await motor_pair.move_for_degrees(0, 260, 0, velocity=-500)
+    await turn(28,30)
+    await drive(4, default_speed, 4)
+    await turn(15, 30)
+    await drive(15, default_speed)
+    await motor_pair.move_for_degrees(0, 250, 0, velocity=-500)
+    await turn(20, -30)
+    await drive(8, default_speed)
     exit(1)
-    await keshet()
-    #await keshet(23,-30,2)
-    await drive(10,-default_speed,4)
-    await motor.run_for_degrees(port.D, 120, 150)
-    await turn(3,30)
-    await drive(13,default_speed,4)
-    await motor.run_for_degrees(port.D, 120, -150)
-    await drive(13,-default_speed,4)
-    await turn(25,-30)
+    await turn(25, 30)
     await drive(10, default_speed)
+    await drive(6, -default_speed)
+    await motor_pair.move_for_degrees(0, 250, 0, velocity=-500)
+
+
 
 async def combined_2 ():
     default_speed = 100
@@ -320,7 +308,7 @@ async def main():
     if color_sensor.color(port.E)== color.RED:
         await shark_coral() # aquanaut()
     if color_sensor.color(port.E)== color.MAGENTA:
-        await collection_blue()
+        await collection_blue2()
     if color_sensor.color(port.E)== color.BLUE:
         await combined_2()
 
