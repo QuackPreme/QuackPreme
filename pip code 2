@@ -173,53 +173,67 @@ async def shark_coral():    #(pair, degrees, angle)
     await motor_pair.move_for_degrees(0, 1500, 0 , velocity=600)
 
 #Magenta
-async def collection_blue():
-    default_speed = 125
-    print(motion_sensor.tilt_angles()[0])
-    # octopus
-    await drive(2, default_speed, 4) # 70
-    await turn(43, -30)
-    await drive(26, default_speed, 4) #115
-    # shrips/coral
-    await motor_pair.move_for_degrees(0, 210, 0, velocity=-500)
-    await turn(25,30)
-    await drive(6, default_speed, 4)
-    await turn(20, 30)
-    
-    await drive(11, default_speed + 50, 4) # 150
-    await drive(5, -default_speed , 4) #-50
-    await turn(15, -30)
-    await drive(5.3, default_speed , 4) # 50
-    await turn(20, 30)
-    await drive(5, default_speed)
-    await motor_pair.move_for_degrees(0, 50, 0, velocity=-400)
-    await turn(45,30)
-    motion_sensor.reset_yaw(0)
-    await drive(4,default_speed)
+async def collection_blue_2():
+    await drive(5,50)
+    await turn(45,-50)
+    await drive(28,90)
+    await drive(8,-90)
+    await turn(20,40)
+    await keshet(35,90,0.92)
+    runloop.sleep_ms(200)
+    await drive(5,-90)
+    #אסיפת הדגימה
+    await turn(38,90)
+    await drive(9,-90)
+    await turn(10,-90)
+    await drive(8,50)
+    runloop.sleep_ms(200)
+    await drive(6,-70)
+    await drive(7,80)
+    await drive(10,-70)
+    runloop.sleep_ms(200)
+    await turn(47,-70)
+    await drive(10,-90)
+    await turn(10,-90)
+    await drive(5,-90)
+    await turn(15,60)
+    await drive(12,-90)
+    #await keshet(3,90,-5)
+    #await drive(1,70)
+    #runloop.sleep_ms(200)
+    #await drive(8,-70)
+    #await turn(45,50)
+    #await drive(15,65)
+    #await turn(30,-70)
+    #await drive(9,80)
+    exit()
+    await drive(8.8,-90)
+    """await turn(20,80)
+    await drive(4,95)
+    await keshet(8,95,0.3)
+    await drive(4,-90)
+    await turn(13,90)
+    await drive(9,50)
+    runloop.sleep_ms(1000)
+    await drive(5,-90)
     runloop.sleep_ms(100)
-    await drive(8,-125)
-    motion_sensor.reset_yaw(0)
-    await drive(4,default_speed)
-    #runloop.sleep_ms(100)
-    await drive(8,-125)
-    exit(1) #חלק מהקוד
-    await turn(45, 30)
-    await drive(3, default_speed)
-    exit(1)
-    await drive(9, default_speed, 4)
-    await motor_pair.move_for_degrees(0, 330, 0, velocity=-555)
-    await turn(20, 30)
-    await drive(11, default_speed, 4)
-    # spike
-    await turn(90, 30)
-    await motor_pair.move_for_degrees(0, 205, 0, velocity=300)
-    await drive(0.1, 1)
-    await motor_pair.move_for_degrees(0, 210, 0, velocity=-300)
-    # home
-    await motor_pair.move_for_degrees(0, 180, 100)
-    await drive(15, default_speed, 4) # 150
-    await turn(25, -30)
-    await drive(22, default_speed, 4) # 150
+    await drive(5,-90)
+    await turn(45,70)
+    await drive(15,70)
+    await turn(30,70)
+    await drive(12,70)"""
+    exit()
+    await turn(100,-70)
+    await drive(0.1,50)
+    await turn(80,-70)
+    await drive(9,90)
+    #runloop.sleep_ms(1000)
+    #await turn(100,-90)
+    #runloop.sleep_ms(200)
+    #await turn(80,-90)
+    #await keshet(30,70,1.889)
+    #await drive(8,90)
+    #await drive(28,-90)
 
 #async def combined ():
     default_speed = 50
