@@ -235,6 +235,12 @@ async def collection_blue2 ():
     await drive(6, -default_speed)
     await motor_pair.move_for_degrees(0, 250, 0, velocity=-500)
 
+async def octopus ():
+    default_speed = 125
+    await drive(22, 150)
+    await drive(30, -170)
+
+
 
 
 async def combined_2 ():
@@ -290,6 +296,11 @@ async def sharkplace():
     await turn(40, 30)
     await drive(20, default_speed)
 
+async def bigboat():
+    default_speed = 30
+    await drive(12, 45)
+    await drive(12, -30)
+
 async def gyro_test():
     await drive_turn(45, 45)
     await drive(25, 200, 4)
@@ -308,9 +319,10 @@ async def main():
     if color_sensor.color(port.E)== color.RED:
         await shark_coral() # aquanaut()
     if color_sensor.color(port.E)== color.MAGENTA:
-        await collection_blue2()
+        await octopus()
     if color_sensor.color(port.E)== color.BLUE:
         await combined_2()
-
+    if color_sensor.color(port.E)== color.WHITE:
+        await bigboat()
 
 runloop.run(main())
