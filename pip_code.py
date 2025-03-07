@@ -1,6 +1,7 @@
 from hub import hardware_id, light_matrix, port, motion_sensor, button, light
 from motor import BRAKE, ERROR, stop, velocity
 import color_sensor, color, runloop, motor_pair, motor, hub, device
+#from typing import Awaitable
 
 
 motor_pair.unpair(1)
@@ -240,8 +241,20 @@ async def octopus ():
     await drive(22, 150)
     await drive(30, -170)
 
-
-
+async def platipus ():
+    default_speed = 125
+    await drive(20, 100)
+    await turn (25,-50)
+    await drive(10, 70) 
+    await turn (25,50)
+    await drive(7, 70)
+    await turn (30,50)
+    await drive(14, 50)
+    await drive(15, -70) 
+    await turn (37,-50)
+    await drive(20, -60)
+    await turn (20,-70) 
+    await drive(20, -70)
 
 async def combined_2 ():
     default_speed = 100
@@ -324,5 +337,6 @@ async def main():
         await combined_2()
     if color_sensor.color(port.E)== color.WHITE:
         await bigboat()
-
+    if color_sensor.color(port.E)== color.AZURE: 
+        await platipus()
 runloop.run(main())
