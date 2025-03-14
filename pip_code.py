@@ -238,22 +238,33 @@ async def collection_blue2 ():
 
 async def octopus ():
     default_speed = 125
-    await drive(22, 150)
-    await drive(30, -170)
+    await drive(10, 100)
+    await turn (45,-50)
+    await drive(17, 100)
+    await drive(9, -100)
+    await turn (23,50)
+    await drive(14, 100)
+    await turn (50,15)
+    await  (50,-15)
+    await drive(16, 100)
+    await drive(20, -70)
+
+
+
 
 async def platipus ():
     default_speed = 125
     await drive(20, 100)
     await turn (25,-50)
-    await drive(10, 70) 
+    await drive(10, 70)
     await turn (25,50)
     await drive(7, 70)
     await turn (30,50)
     await drive(14, 50)
-    await drive(15, -70) 
+    await drive(15, -70)
     await turn (37,-50)
     await drive(20, -60)
-    await turn (20,-70) 
+    await turn (20,-70)
     await drive(20, -70)
 
 async def combined_2 ():
@@ -337,6 +348,6 @@ async def main():
         await combined_2()
     if color_sensor.color(port.E)== color.WHITE:
         await bigboat()
-    if color_sensor.color(port.E)== color.AZURE: 
+    if color_sensor.color(port.E)== color.AZURE:
         await platipus()
 runloop.run(main())
